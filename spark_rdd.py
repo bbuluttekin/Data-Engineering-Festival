@@ -7,7 +7,7 @@ def count_elements_in_dataset(dataset):
     :return: number of elements in the RDD
     """
 
-    raise NotImplementedError
+    return dataset.count()
 
 
 def get_first_element(dataset):
