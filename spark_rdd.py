@@ -32,7 +32,7 @@ def get_all_attributes(dataset):
     :return: all unique attributes collected in a list
     """
 
-    raise NotImplementedError
+    return dataset.flatMap(lambda x: x.keys()).distinct().collect()
 
 
 def get_elements_w_same_attributes(dataset):
