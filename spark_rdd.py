@@ -46,8 +46,16 @@ def get_elements_w_same_attributes(dataset):
     :return: an RDD containing only elements with same attributes as the
     first element
     """
+    def check(first_item, item):
+        first_attr = set(first_item.keys())
+        item_attr = set(item.keys())
+        if first_attr == item_attr:
+            return True
+        else:
+            return False
+    first_item = dataset.first()
 
-    raise NotImplementedError
+    return dataset.flatMap(lambda x: check(first_item, x))
 
 
 def get_min_max_timestamps(dataset):
