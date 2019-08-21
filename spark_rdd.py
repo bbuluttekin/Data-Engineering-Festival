@@ -107,8 +107,13 @@ def get_number_of_posts_per_hour(dataset):
     :type dataset: a Spark RDD
     :return: an RDD with number of elements per hour
     """
+    from datetime import datetime as dt
 
-    raise NotImplementedError
+    def get_hour(rec):
+        t = dt.utcfromtimestamp(rec['created_at_i'])
+        return t.hour
+
+    return dataset.map(lambda x: (get_hour(x), 1)).reduceByKey(lambda x, y: x+y)
 
 
 def get_score_per_hour(dataset):
