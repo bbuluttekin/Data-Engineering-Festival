@@ -76,7 +76,7 @@ def get_min_max_timestamps(dataset):
     max_tstamp = dataset.map(lambda x: x['created_at_i']).reduce(
         lambda x, y: x if x > y else y)
 
-    return min_tstamp, max_tstamp
+    return extract_time(min_tstamp), extract_time(max_tstamp)
 
 
 def get_number_of_posts_per_bucket(dataset, min_time, max_time):
