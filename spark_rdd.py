@@ -55,7 +55,7 @@ def get_elements_w_same_attributes(dataset):
             return False
     first_item = dataset.first()
 
-    return dataset.flatMap(lambda x: check(first_item, x))
+    return dataset.map(lambda x: check(first_item, x)).countByValue()[1]
 
 
 def get_min_max_timestamps(dataset):
