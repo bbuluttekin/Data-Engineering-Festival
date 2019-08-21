@@ -66,8 +66,12 @@ def get_min_max_timestamps(dataset):
     :return: min and max timestamp in a tuple object
     :rtype: tuple
     """
+    min_tstamp = dataset.map(lambda x: x['created_at_i']).reduce(
+        lambda x, y: x if x < y else y)
+    max_tstamp = dataset.map(lambda x: x['created_at_i']).reduce(
+        lambda x, y: x if x > y else y)
 
-    raise NotImplementedError
+    return min_tstamp, max_tstamp
 
 
 def get_number_of_posts_per_bucket(dataset, min_time, max_time):
@@ -110,7 +114,7 @@ def get_score_per_hour(dataset):
 
 def get_proportion_of_scores(dataset):
     """
-    It may be more useful to look at sucessful posts that get over 200 points.
+    It may be more useful to look at successful posts that get over 200 points.
     Find the proportion of posts that get above 200 points per hour.
     :param dataset: dataset loaded in Spark context
     :type dataset: a Spark RDD
