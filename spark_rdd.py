@@ -66,6 +66,11 @@ def get_min_max_timestamps(dataset):
     :return: min and max timestamp in a tuple object
     :rtype: tuple
     """
+    from datetime import datetime as dt
+
+    def extract_time(timestamp):
+        return dt.utcfromtimestamp(timestamp)
+
     min_tstamp = dataset.map(lambda x: x['created_at_i']).reduce(
         lambda x, y: x if x < y else y)
     max_tstamp = dataset.map(lambda x: x['created_at_i']).reduce(
