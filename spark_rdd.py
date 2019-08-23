@@ -124,8 +124,16 @@ def get_score_per_hour(dataset):
     :type dataset: a Spark RDD
     :return: an RDD with average score per hour
     """
+    from datetime import datetime as dt
 
-    raise NotImplementedError
+    def get_hour(rec):
+        time = dt.utcfromtimestamp(rec['created_at_i'])
+        return time.hour
+
+    scores_rdd = dataset.map(lambda x: (get_hour(x), (x['points'], 1))).reduceByKey(
+        lambda x, y: (x[0] + y[0], x[1] + y[1])).map(lambda x: (x[0], x[1][0] / x[1][1]))
+
+    return scores_rdd
 
 
 def get_proportion_of_scores(dataset):
