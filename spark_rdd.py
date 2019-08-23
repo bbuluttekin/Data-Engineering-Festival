@@ -152,8 +152,8 @@ def get_proportion_of_scores(dataset):
 
     prop_per_hour_rdd = dataset.map(
         lambda x: (get_hour(x), (1 if x['points'] > 200 else 0, 1))).reduceByKey(
-        lambda x, y: (x[0] + y[0], x[1] + y[1])).map(
-        lambda x: (x[0], x[1][0] / x[1][1]))
+            lambda x, y: (x[0] + y[0], x[1] + y[1])).map(
+                lambda x: (x[0], x[1][0] / x[1][1]))
 
     return prop_per_hour_rdd
 
