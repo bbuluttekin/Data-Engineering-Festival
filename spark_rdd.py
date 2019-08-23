@@ -144,8 +144,18 @@ def get_proportion_of_scores(dataset):
     :type dataset: a Spark RDD
     :return: an RDD with the proportion of scores over 200 per hour
     """
+    from datetime import datetime as dt
 
-    raise NotImplementedError
+    def get_hour(rec):
+        time = dt.utcfromtimestamp(rec['created_at_i'])
+        return time.hour
+
+    prop_per_hour_rdd = dataset.map(
+        lambda x: (get_hour(x), (1 if x['points'] > 200 else 0, 1))).reduceByKey(
+        lambda x, y: (x[0] + y[0], x[1] + y[1])).map(
+        lambda x: (x[0], x[1][0] / x[1][1]))
+
+    return prop_per_hour_rdd
 
 
 def get_proportion_of_success(dataset):
