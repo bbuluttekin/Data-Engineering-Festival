@@ -110,8 +110,8 @@ def get_number_of_posts_per_hour(dataset):
     from datetime import datetime as dt
 
     def get_hour(rec):
-        t = dt.utcfromtimestamp(rec['created_at_i'])
-        return t.hour
+        time = dt.utcfromtimestamp(rec['created_at_i'])
+        return time.hour
 
     return dataset.map(lambda x: (get_hour(x), 1)).reduceByKey(lambda x, y: x+y)
 
