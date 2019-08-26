@@ -171,8 +171,18 @@ def get_proportion_of_success(dataset):
     :type dataset: a Spark RDD
     :return: an RDD with the proportion of successful post per title length
     """
+    import re
 
-    raise NotImplementedError
+    def get_words(line):
+        return re.compile(r'\w+').findall(line)
+
+    prop_per_title_length_rdd = dataset.map(
+        lambda x: (len(get_words(
+            x.get('title', ''))), (1 if x['points'] > 200 else 0, 1))).reduceByKey(
+                lambda x, y: (x[0] + y[0], x[1] + y[1])).map(
+                    lambda x: (x[0], x[1][0] / x[1][1]))
+
+    return prop_per_title_length_rdd
 
 
 def get_title_length_distribution(dataset):
