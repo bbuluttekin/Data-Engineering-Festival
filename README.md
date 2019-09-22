@@ -1,4 +1,5 @@
-# Big Data
+# Data Engineering Festival
+This project is part of data engineering festival at HSBC. 
 
 In this project, you will be using the Spark RDD API for data processing.
 
