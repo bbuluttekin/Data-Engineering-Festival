@@ -1,7 +1,7 @@
 # Data Engineering Festival
 This project is part of data engineering festival at HSBC. 
 
-In this project, you will be using the Spark RDD API for data processing.
+In this project, I will be using the Spark RDD API for data processing.
 
 ## Spark RDD: HackerNews data analysis challenge
 
